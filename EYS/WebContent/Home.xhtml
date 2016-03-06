@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>EYS</title>
+</h:head>
+<h:body>
+	<h2>Merhaba JSF</h2>
+	<h:form id="frmKisi">
+	<p:growl id="growl" showDetail="true" life="3000" autoUpdate="true"  />  
+ 
+		<p:dataTable id="tblKisi" selectionMode="single" selection="#{homeMB.kisi}" rowKey="#{kisi.id}" widgetVar="tblKisi" var="kisi" value="#{homeMB.liste}">
+		
+<!-- 			 <p:ajax event="rowSelect" update=":frmKisi:dlgKisi" oncomplete="PF('dlgKisi').show()" listener="#{homeMB.rowSelect}" /> -->
+			
+			<p:column headerText="ID" >#{kisi.id}</p:column>
+
+			<p:column headerText="Ad" >#{kisi.ad}</p:column>
+			
+			<p:column headerText="Soyad" >#{kisi.soyad}</p:column>
+			
+			<p:column headerText="TC Kimlik No" >#{kisi.tcKimlikNo}</p:column>
+			
+			<p:column headerText="İşlemler"> 
+				<p:commandButton icon="ui-icon-trash" actionListener="#{homeMB.sil(kisi.id)}" update=":frmKisi:tblKisi,:frmKisi:growl" ></p:commandButton>
+			</p:column>
+		</p:dataTable>
+		<p:commandButton value="Yeni" onclick="PF('dlgKisi').show()"></p:commandButton>
+		
+		<p:dialog id="dlgKisi" widgetVar="dlgKisi">
+			<p:panelGrid columns="2">
+				<p:outputLabel>Ad :</p:outputLabel>
+				<p:inputText value="#{homeMB.kisi.ad}" ></p:inputText>
+				
+				<p:outputLabel>Soyad :</p:outputLabel>
+				<p:inputText value="#{homeMB.kisi.soyad}" ></p:inputText>
+				
+				<p:outputLabel>TC :</p:outputLabel>
+				<p:inputText value="#{homeMB.kisi.tcKimlikNo}" ></p:inputText>
+				
+				<p:outputLabel>Doğum Tarihi :</p:outputLabel>
+				<p:calendar value="#{homeMB.kisi.dogumTarihi}" ></p:calendar>
+				
+				<p:outputLabel>Email :</p:outputLabel>
+				<p:inputText value="#{homeMB.kisi.mail}" ></p:inputText>
+			
+				<p:commandButton value="İptal" onclick="PF('dlgKisi').hide()"></p:commandButton>
+				<p:commandButton value="Kaydet" actionListener="#{homeMB.kaydet}" update=":frmKisi:tblKisi,:frmKisi:growl,:frmKisi:dlgKisi" oncomplete="PF('dlgKisi').hide()"></p:commandButton>
+			
+			</p:panelGrid>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

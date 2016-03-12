@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="pageContent">
+		<h:form id="frmKisi">
+			<p:growl id="growl" showDetail="true" life="10000" autoUpdate="true" />
+
+			<p:dataTable id="tblKisi" selectionMode="single"
+				selection="#{kisiMB.kisi}" rowKey="#{kisi.id}" widgetVar="tblKisi"
+				var="kisi" value="#{kisiMB.lazy}" lazy="true" rows="10"
+				paginatorPosition="bottom" paginator="true" 
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+
+				<f:facet name="header">
+					Kişi Listesi
+				</f:facet>
+
+				<p:ajax event="rowSelect" listener="#{kisiMB.onRowSelect}" update=":frmKisi:dlgKisi" oncomplete="PF('dlgKisi').show()"/>
+				
+				<p:column headerText="ID">#{kisi.id}</p:column>
+
+				<p:column headerText="Ad">#{kisi.ad}</p:column>
+
+				<p:column headerText="Soyad">#{kisi.soyad}</p:column>
+
+				<p:column headerText="TC Kimlik No">#{kisi.tcKimlikNo}</p:column>
+				
+				<p:column headerText="Doğum Tarihi">
+					<p:outputLabel value="#{kisi.dogumTarihi}" disabled="true">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</p:outputLabel> 
+				</p:column>
+
+				<p:column headerText="İşlemler">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{kisiMB.sil(kisi.id)}"
+						update=":frmKisi:tblKisi,:frmKisi:growl">
+						<p:confirm header="Silme Onay"
+							message="Silmek İstediginizden Emin misiniz?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Evet" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Hayır" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:column>
+			</p:dataTable>
+			<p:commandButton value="Yeni" icon="ui-icon-plus" onclick="PF('dlgKisi').show()"></p:commandButton>
+
+			<p:dialog id="dlgKisi" modal="true" widgetVar="dlgKisi">
+				<p:panelGrid columns="2">
+					<p:outputLabel>Ad :</p:outputLabel>
+					<p:inputText value="#{kisiMB.kisi.ad}"></p:inputText>
+
+					<p:outputLabel>Soyad :</p:outputLabel>
+					<p:inputText value="#{kisiMB.kisi.soyad}"></p:inputText>
+
+					<p:outputLabel>TC :</p:outputLabel>
+					<p:inputText value="#{kisiMB.kisi.tcKimlikNo}"></p:inputText>
+
+					<p:outputLabel>Doğum Tarihi :</p:outputLabel>
+					<p:calendar value="#{kisiMB.kisi.dogumTarihi}"></p:calendar>
+
+					<p:outputLabel>Email :</p:outputLabel>
+					<p:inputText value="#{kisiMB.kisi.mail}"></p:inputText>
+
+					<p:commandButton value="İptal" onclick="PF('dlgKisi').hide()"></p:commandButton>
+					<p:commandButton value="Kaydet" actionListener="#{kisiMB.kaydet}"
+						update=":frmKisi:tblKisi,:frmKisi:growl,:frmKisi:dlgKisi"
+						oncomplete="PF('dlgKisi').hide()"></p:commandButton>
+
+				</p:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

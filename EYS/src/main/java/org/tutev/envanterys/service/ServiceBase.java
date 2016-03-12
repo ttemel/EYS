@@ -20,7 +20,7 @@ public interface ServiceBase<T> extends Serializable {
    
    public List<T> getAll();
       
-   public Boolean update(T entity);
+   public Boolean update(T entity) throws TDbException;
       
    public Boolean delete(T entity);
    

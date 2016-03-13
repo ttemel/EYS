@@ -51,7 +51,7 @@ public class YerlesimBean implements Serializable{
 			
 			listele();
 			yerlesim=new Yerlesim();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Güncelleme Başarlı", "Güncelleme Kaydedildi!") );
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Kayıt Başarlı", "Güncelleme Kaydedildi!") );
 		} catch (TDbException e) {			
 			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Hata",  e.getMessage()) );
 			e.printStackTrace();

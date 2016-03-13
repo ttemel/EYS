@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -21,7 +20,6 @@ import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Sozluk;
 import org.tutev.envanterys.entity.enm.SozlukTip;
 import org.tutev.envanterys.framework.PageModel;
-import org.tutev.eys.mbean.DataMB;
 
 /**
  *
@@ -136,6 +134,7 @@ public class SozlukService implements ServiceBase<Sozluk> {
 		return model;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Sozluk> getBySozlukTip(SozlukTip tip) {
         Session session = THibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Sozluk.class);

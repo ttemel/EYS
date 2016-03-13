@@ -16,7 +16,6 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Kisi;
-import org.tutev.envanterys.entity.Sozluk;
 import org.tutev.envanterys.framework.PageModel;
 import org.tutev.envanterys.service.KisiService;
 

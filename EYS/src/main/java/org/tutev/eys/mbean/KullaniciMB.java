@@ -15,10 +15,8 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.tutev.envanterys.TDbException;
-import org.tutev.envanterys.entity.Kisi;
 import org.tutev.envanterys.entity.Kullanici;
 import org.tutev.envanterys.framework.PageModel;
-import org.tutev.envanterys.service.KisiService;
 import org.tutev.envanterys.service.KullaniciService;
 
 @ManagedBean(name="kullaniciMB")
@@ -35,10 +33,6 @@ public class KullaniciMB implements Serializable {
 	
 	public KullaniciService getKullaniciService() {
 		return kullaniciService;
-	}
-
-	public void setKullaniciService(KullaniciService kullaniciService) {
-		this.kullaniciService = kullaniciService;
 	}
 
 	public void setLazy(LazyDataModel<Kullanici> lazy) {
@@ -86,7 +80,7 @@ public class KullaniciMB implements Serializable {
 		this.kullanici= (Kullanici) event.getObject();        
 	}
 
-	public void setKisiService(KisiService kisiService) {
+	public void setKullaniciService(KullaniciService kullaniciService) {
 		this.kullaniciService = kullaniciService;
 	}
 	

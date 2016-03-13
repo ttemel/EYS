@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
 import org.tutev.envanterys.entity.Sozluk;
 import org.tutev.envanterys.service.SozlukService;
 
-@FacesConverter(value="sozlukConverter")
+@FacesConverter(value="sozlukConverter",forClass=Sozluk.class)
 @RequestScoped
 public class SozlukConverter implements Converter {
 

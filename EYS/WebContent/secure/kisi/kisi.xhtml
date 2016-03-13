@@ -56,7 +56,7 @@
 					</p:confirmDialog>
 				</p:column>
 				<f:facet name="footer">
-					<p:commandButton value="Yeni" icon="ui-icon-plus" onclick="PF('dlgKisi').show()"></p:commandButton>
+					<p:commandButton value="Yeni" actionListener="#{kisiMB.yeni}" update=":frmKisi:dlgKisi" icon="ui-icon-plus" oncomplete="PF('dlgKisi').show()"></p:commandButton>
 				</f:facet>
 			</p:dataTable>
 			
@@ -77,6 +77,16 @@
 
 					<p:outputLabel>Email :</p:outputLabel>
 					<p:inputText value="#{kisiMB.kisi.mail}"></p:inputText>
+					
+					<p:outputLabel>Uyruk :</p:outputLabel>
+					<p:selectOneMenu value="#{kisiMB.kisi.uyruk}" converter="#{sozlukConverter}">
+						<f:selectItems itemLabel="#{o.tanim}" itemValue="#{o.id}" var="o"  value="#{dataMB.uyrukList}"></f:selectItems>
+					</p:selectOneMenu>
+					
+					<p:outputLabel>Cinsiyet :</p:outputLabel>
+					<p:selectOneMenu value="#{kisiMB.kisi.cinsiyet}" converter="#{sozlukConverter}">
+						<f:selectItems itemLabel="#{o.tanim}" itemValue="#{o.id}" var="o" value="#{dataMB.cinsiyetList}"></f:selectItems>
+					</p:selectOneMenu>
 
 					<p:commandButton value="İptal" onclick="PF('dlgKisi').hide()"></p:commandButton>
 					<p:commandButton value="Kaydet" actionListener="#{kisiMB.kaydet}"

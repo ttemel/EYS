@@ -16,6 +16,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Kisi;
+import org.tutev.envanterys.entity.Sozluk;
 import org.tutev.envanterys.framework.PageModel;
 import org.tutev.envanterys.service.KisiService;
 
@@ -47,12 +48,15 @@ public class KisiMB implements Serializable{
 				kisiService.update(kisi);
 			
 			listele();
-			kisi=new Kisi();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Kayıt Başarılı", "Kişi Kaydedildi") );
 		} catch (TDbException e) {			
 			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Hata",  e.getMessage()) );
 			e.printStackTrace();
 		}
+	}
+	
+	public void yeni() {
+		kisi=new Kisi();
 	}
 
 	public void sil(Long id) {
@@ -63,7 +67,7 @@ public class KisiMB implements Serializable{
 	}
 	
 	public void onRowSelect(SelectEvent event) {
-		this.kisi= (Kisi) event.getObject();        
+		this.kisi= (Kisi) event.getObject();    
 	}
 
 	public void setKisiService(KisiService kisiService) {
@@ -71,8 +75,9 @@ public class KisiMB implements Serializable{
 	}
 	
 	public Kisi getKisi() {
-		if(kisi==null){
-			kisi=new Kisi();
+		if (kisi == null) {
+			kisi = new Kisi();
+
 		}
 		return kisi;
 	}

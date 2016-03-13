@@ -6,46 +6,63 @@
 package org.tutev.envanterys.service;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.tutev.envanterys.TDbException;
-import org.tutev.envanterys.entity.Kisi;
-import org.tutev.envanterys.entity.SKart;
 import org.tutev.envanterys.entity.Sozluk;
+import org.tutev.envanterys.entity.enm.SozlukTip;
+import org.tutev.envanterys.framework.PageModel;
+import org.tutev.eys.mbean.DataMB;
 
 /**
  *
  * @author takatas
  */
+@ManagedBean(name = "sozlukService")
+@ApplicationScoped
 public class SozlukService implements ServiceBase<Sozluk> {
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8222687496888735137L;
+	
+//	@ManagedProperty(value = "#{dataMB}")
+//	private DataMB dataMB;
+
+	@Override
     public Sozluk save(Sozluk entity) throws TDbException {
-//        if (entity.getId()!= null && entity.getId().equals("")) {
-//            throw new TDbException("ID Boş Olamaz"); //To change body of generated methods, choose Tools | Templates.
-//        }
-        if (entity.getKod() != null && entity.getKod().equals("")) {
-            throw new TDbException("Kod Boş Olamaz"); //To change body of generated methods, choose Tools | Templates.
+        if (entity.getKod() == null && entity.getKod().equals("")) {
+            throw new TDbException("Kod Boş Olamaz"); 
         }
-        if (entity.getTanim() != null && entity.getTanim().equals("")) {
-            throw new TDbException("Tanım Boş Olamaz"); //To change body of generated methods, choose Tools | Templates.
+        if (entity.getTanim() == null && entity.getTanim().equals("")) {
+            throw new TDbException("Tanım Boş Olamaz"); 
         }
-        if (entity.getTip() != null && entity.getTip().equals("")) {
-            throw new TDbException("Tip Boş Olamaz"); //To change body of generated methods, choose Tools | Templates.
+        if (entity.getSozluktip() == null ) {
+            throw new TDbException("Tip Boş Olamaz");
         }
 
         Session session = THibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.save(entity);
         t.commit();
+//        dataMB.initializeData();
         session.close();
 
         return entity;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Sozluk> getAll() {
         Session session = THibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Sozluk.class);
@@ -67,6 +84,7 @@ public class SozlukService implements ServiceBase<Sozluk> {
         Transaction t = session.beginTransaction();
         session.saveOrUpdate(entity);
         t.commit();
+//        dataMB.initializeData();
         session.close();
 
         return true;
@@ -100,4 +118,28 @@ public class SozlukService implements ServiceBase<Sozluk> {
         Sozluk sz = (Sozluk) criteria.uniqueResult();
         delete(sz);
     }
+
+	public PageModel getByPaging(int first, int pageSize, Map<String, Object> filters) {
+		Session session = THibernateUtil.getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria(Sozluk.class);
+
+		// Filterları Hallet
+
+		PageModel model = new PageModel();
+		criteria.setProjection(Projections.rowCount());
+		model.setRowCount(Integer.parseInt("" + criteria.uniqueResult()));
+
+		criteria.setProjection(null);
+		criteria.setFirstResult(first);
+		criteria.setMaxResults(pageSize);
+		model.setList(criteria.list());
+		return model;
+	}
+
+	public List<Sozluk> getBySozlukTip(SozlukTip tip) {
+        Session session = THibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Sozluk.class);
+        criteria.add(Restrictions.eq("sozluktip", tip));
+        return criteria.list();
+	}
 }

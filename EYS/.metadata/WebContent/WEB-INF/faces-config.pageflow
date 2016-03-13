@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14571815544260" configfile="/EYS/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14571815544260" configfile="/EYS/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf145787212692839" outlinks="pf145787212692840 pf145787212692841" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="secure/yerlesim/yerlesim.xhtml" id="pf145787212692842" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf145787212692840" path="/secure/yerlesim/yerlesim.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="secure/kisi/kisi.xhtml" id="pf145787212692843" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf145787212692841" path="/secure/kisi/kisi.xhtml"/>
+  <links id="pf145787212692840" target="pf145787212692842" source="pf145787212692839" outcome="yerlesim"/>
+  <links id="pf145787212692841" target="pf145787212692843" source="pf145787212692839" outcome="kisi"/>
+</pageflow:Pageflow>

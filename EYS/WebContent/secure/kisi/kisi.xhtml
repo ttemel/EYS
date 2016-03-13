@@ -13,7 +13,7 @@
 		<h:form id="frmKisi">
 			<p:growl id="growl" showDetail="true" life="10000" />
 
-			<p:dataTable id="tblKisi" selectionMode="single"
+			<p:dataTable id="tblKisi" selectionMode="single" reflow="true"
 				selection="#{kisiMB.kisi}" rowKey="#{kisi.id}" widgetVar="tblKisi"
 				var="kisi" value="#{kisiMB.lazy}" lazy="true" rows="10"
 				paginatorPosition="bottom" paginator="true" 

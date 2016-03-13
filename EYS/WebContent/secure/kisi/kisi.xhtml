@@ -11,7 +11,7 @@
 
 	<ui:define name="pageContent">
 		<h:form id="frmKisi">
-			<p:growl id="growl" showDetail="true" life="10000" autoUpdate="true" />
+			<p:growl id="growl" showDetail="true" life="10000" />
 
 			<p:dataTable id="tblKisi" selectionMode="single"
 				selection="#{kisiMB.kisi}" rowKey="#{kisi.id}" widgetVar="tblKisi"
@@ -82,6 +82,7 @@
 
 				</p:panelGrid>
 			</p:dialog>
+			<br></br>
 		</h:form>
 	</ui:define>
 </ui:composition>

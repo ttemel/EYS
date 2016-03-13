@@ -1,122 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-
-</h:head>
-<h:body>
-
-	<p:megaMenu style="margin-top:20px">
-		<p:menuitem value="Ana Sayfa" url="/Home.xhtml" icon="ui-icon-home" />
-		<p:submenu label="Genel Tanımlar" icon="ui-icon-check">
-			<p:column>
-				<p:submenu label="Kişi/Personel">
-					<p:menuitem value="Kişi İşlemleri" url="/secure/kisi/kisi.xhtml" />
-					<p:menuitem value="TV.1.2" url="#" />
-				</p:submenu>
-				<p:submenu label="TV.2">
-					<p:menuitem value="TV.2.1" url="#" />
-					<p:menuitem value="TV.2.2" url="#" />
-					<p:menuitem value="TV.2.3" url="#" />
-				</p:submenu>
-			</p:column>
-
-			<p:column>
-				<p:submenu label="TV.4">
-					<p:menuitem value="TV.4.1" url="#" />
-					<p:menuitem value="TV.4.2" url="#" />
-				</p:submenu>
-				<p:submenu label="TV.5">
-					<p:menuitem value="TV.5.1" url="#" />
-					<p:menuitem value="TV.5.2" url="#" />
-					<p:menuitem value="TV.5.3" url="#" />
-				</p:submenu>
-			</p:column>
-
-
-		</p:submenu>
-
-		<p:submenu label="Sports" icon="ui-icon-document">
-
-			<p:column>
-				<p:submenu label="Sports.1">
-					<p:menuitem value="Sports.1.1" url="#" />
-					<p:menuitem value="Sports.1.2" url="#" />
-				</p:submenu>
-				<p:submenu label="Sports.2">
-					<p:menuitem value="Sports.2.1" url="#" />
-					<p:menuitem value="Sports.2.2" url="#" />
-					<p:menuitem value="Sports.2.3" url="#" />
-				</p:submenu>
-			</p:column>
-
-			<p:column>
-				<p:submenu label="Sports.4">
-					<p:menuitem value="Sports.4.1" url="#" />
-					<p:menuitem value="Sports.4.2" url="#" />
-				</p:submenu>
-				<p:submenu label="Sports.5">
-					<p:menuitem value="Sports.5.1" url="#" />
-					<p:menuitem value="Sports.5.2" url="#" />
-					<p:menuitem value="Sports.5.3" url="#" />
-				</p:submenu>
-			</p:column>
-			<p:column>
-				<p:submenu label="Sports.7">
-					<p:menuitem value="Sports.7.1" url="#" />
-					<p:menuitem value="Sports.7.2" url="#" />
-				</p:submenu>
-			</p:column>
-		</p:submenu>
-
-		<p:submenu label="Entertainment" icon="ui-icon-pencil">
-			<p:column>
-				<p:submenu label="Entertainment.1">
-					<p:menuitem value="Entertainment.1.1" url="#" />
-					<p:menuitem value="Entertainment.1.2" url="#" />
-				</p:submenu>
-				<p:submenu label="Entertainment.2">
-					<p:menuitem value="Entertainment.2.1" url="#" />
-					<p:menuitem value="Entertainment.2.2" url="#" />
-					<p:menuitem value="Entertainment.2.3" url="#" />
-				</p:submenu>
-			</p:column>
-
-			<p:column>
-				<p:submenu label="Entertainment.4" icon="ui-icon-help">
-					<p:menuitem value="Entertainment.4.1" url="#" />
-					<p:menuitem value="Entertainment.4.2" url="#" />
-				</p:submenu>
-				<p:submenu label="Entertainment.5">
-					<p:menuitem value="Entertainment.5.1" url="#" />
-					<p:menuitem value="Entertainment.5.2" url="#" />
-					<p:menuitem value="Entertainment.5.3" url="#" />
-				</p:submenu>
-			</p:column>
-		</p:submenu>
-
-
-
-		<p:menuitem value="Quit" url="http://www.primefaces.org"
-			icon="ui-icon-close" />
-	</p:megaMenu>
-
-	<br></br>
-	<ui:insert name="pageContent">
-
-	</ui:insert>
-
-	<br></br>
-	<ui:insert name="footer">
-
-	</ui:insert>
-
-
-</h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>BootsFaces: the next-gen JSF Framework based on Bootstrap</title>
+        <meta name="author" content="Riccardo Massera" />
+        <meta name="description" content="BootsFaces, a powerful JSF framework that takes the best from Bootstrap and jQuery UI to let develop well-designed state-of-the-art next-gen Front-end Enterprise Applications fast and easy supporting HTML5." />
+        <meta name="KEYWORDS" content="jsf, bootstrap, framework, java, enterprise, server, faces, jquery, usability, next-gen, web, html5, easy, modern, well-designed, website, state-of-the-art" />
+        <meta name="robots" content="index, follow" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="revisit-after" content="7 days" />
+        <meta name="DISTRIBUTION" content="GLOBAL" />
+        <meta http-equiv="PRAGMA" content="NO-CACHE" />
+        <meta name="copyright" content="TheCoder4.eu ( Riccardo Massera ), Stephan Rauh et al." />
+        <h:outputStylesheet library="sh" name="css/shCore.css"/>
+        <h:outputStylesheet library="sh" name="css/shCoreEclipse.css"/>
+        <!-- These CSS don't do anything. The just demonstrate the position attribute. -->
+        <h:outputStylesheet name="last.css" position="last"/>
+        <h:outputStylesheet name="first.css" position="first"/>
+        <h:outputStylesheet name="middle.css" position="middle"/>
+        <h:outputStylesheet library="customthemes" name="#{theme.customTheme}/bootstrap.min.css"  rendered="#{theme.customTheme ne ''}"/>
+        <h:outputStylesheet library="customthemes" name="#{theme.customTheme}/#{theme.customTheme}.css" rendered="#{theme.customTheme ne ''}"/>
+        <style>.tooltip-inner {
+    max-width: 350px;
+    /* If max-width does not work, try using width instead */
+    width: 350px; 
+}</style>
+    </h:head>
+    <h:body style="padding-top: 85px;padding-bottom: 85px;" addLabels="false" addMessages="false">
+        
+        <h:outputScript library="sh" name="js/shCore.js"         target="head"/>
+        <h:outputScript library="sh" name="js/shBrushXml.js"     target="head"/>
+        <h:outputScript library="sh" name="js/shBrushJava.js"    target="head"/>
+        <h:outputScript library="sh" name="js/shBrushGroovy.js"  target="head"/>
+        <h:outputScript library="sh" name="js/shBrushJScript.js" target="head"/>
+        <script>SyntaxHighlighter.defaults['gutter'] = false;</script>   
+        <script>
+        if ($.blockUI) {
+          $.blockUI.defaults.overlayCSS.opacity=0;
+          $.blockUI.defaults.message='<h1><img src="../javax.faces.resource/images/waitcursor.gif.jsf?ln=bsf" /></h1>';
+        }
+        </script>         
+        <ui:insert name="nbtop">
+            <ui:include src="/template/navbartop.xhtml"/>
+        </ui:insert>
+        
+        <b:container>
+            <ui:insert name="pageContent"/>
+        </b:container>
+        
+        <ui:insert name="nbtop">
+            <ui:include src="/template/navbarbottom.xhtml"/>
+        </ui:insert>
+        
+    </h:body>
 </html>

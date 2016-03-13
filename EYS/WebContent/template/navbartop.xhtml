@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:b="http://bootsfaces.net/ui">
+
+  <ui:remove>
+  </ui:remove>
+  <b:navBar brand="Envanter Yönetim Sistemi"
+     inverse="true"
+    position="top" sticky="true">
+    <b:container>
+      <b:navbarLinks>
+        <b:navLink />
+        <b:navLink />
+        <b:navbarLinks>
+             <b:navLink outcome="/index.xhtml" value="Home" iconAwesome="home" />
+        </b:navbarLinks>
+        <b:dropMenu value="Genel Tanımlar">
+          <b:navLink value="Kişi Tanımları" href="/EYS/secure/kisi/kisi.xhtml?faces-redirect=true" icon="tasks" />
+          
+          <b:navLink value="Yerleşim Tanımları" href="/yerlesim/yerlesim.xhtml?faces-redirect=true" icon="tasks" />
+          <b:navLink value="ButterFaces" outcome="/integration/ButterFaces" icon="tasks" />
+          <ui:remove>
+            <b:navLink value="undocumented components"
+              outcome="/undocumented" icon="question-circle" />
+          </ui:remove>
+        </b:dropMenu>
+
+        <b:dropMenu value="jQueryUI Widgets">
+          <b:navLink value="Slider" outcome="/jquery-ui/slider"
+            icon="tasks" iconAwesome="sliders" />
+          <b:navLink value="More Sliders" outcome="/jquery-ui/slider2"
+            icon="tasks" />
+          <b:navLink value="DatePicker" outcome="/jquery-ui/datepicker"
+            icon="calendar" />
+        </b:dropMenu>
+      </b:navbarLinks>
+      <b:navbarLinks pull="right">
+        <h:form style="display:inline" styleClass="form-inline">
+          <b:commandButton styleClass="theme-selector-button" value="select"
+            action="#{theme.selectTheme}" style="display:none" />
+        </h:form>
+      </b:navbarLinks>
+
+      <b:navbarLinks pull="right">
+        <b:navLink  value="Aktif Kullanıcı" />
+      </b:navbarLinks>
+    </b:container>
+  </b:navBar>
+
+</ui:fragment>

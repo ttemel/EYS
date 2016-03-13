@@ -4,16 +4,4 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
 
-	<navigation-rule>
-
-		<navigation-case>
-			<from-outcome>yerlesim</from-outcome>
-			<to-view-id>/secure/yerlesim/yerlesim.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>kisi</from-outcome>
-			<to-view-id>/secure/kisi/kisi.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
 </faces-config>

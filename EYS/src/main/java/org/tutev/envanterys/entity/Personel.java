@@ -35,8 +35,7 @@ public class Personel extends BaseEntity {
 	private String soyad;
 	private String bolum;
 	private Date isBaslama;
-
-	private Date isCıkıs;
+	private Date isCikis;
 
 	@Id
 	@Column(name = "Personel_id")
@@ -95,13 +94,13 @@ public class Personel extends BaseEntity {
 		this.isBaslama = isBaslama;
 	}
 
-	@Column(name = "Personel_IssCıkıs", length = 50)
+	@Column(name = "Personel_IsCıkıs", length = 50)
 	public Date getIsCikis() {
-		return isCıkıs;
+		return isCikis;
 	}
-
-	public void setIsCıkıs(Date isCıkıs) {
-		this.isCıkıs = isCıkıs;
+	
+	public void setIsCikis(Date isCikis) {
+		this.isCikis = isCikis;
 	}
 
 }

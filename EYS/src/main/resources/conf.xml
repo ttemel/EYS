@@ -21,6 +21,7 @@
     <mapping class="org.tutev.envanterys.entity.Sozluk"/>
     <mapping class="org.tutev.envanterys.entity.Yerlesim"/>
     <mapping class="org.tutev.envanterys.entity.Demirbas"/>
+    <mapping class="org.tutev.envanterys.entity.Personel"/>
     <mapping class="org.tutev.envanterys.entity.Rol"/>
     <mapping class="org.tutev.envanterys.entity.Dosya"/>
     <mapping class="org.tutev.envanterys.entity.KullaniciRol"/>

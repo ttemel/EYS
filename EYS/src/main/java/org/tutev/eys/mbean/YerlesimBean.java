@@ -2,6 +2,7 @@ package org.tutev.eys.mbean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,10 +11,13 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import org.tutev.envanterys.TDbException;
-import org.tutev.envanterys.entity.Kisi;
+
 import org.tutev.envanterys.entity.Yerlesim;
-import org.tutev.envanterys.service.KisiService;
+import org.tutev.envanterys.framework.PageModel;
 import org.tutev.envanterys.service.YerlesimService;
 
 @ManagedBean(name="yerlesimMB")
@@ -27,22 +31,27 @@ public class YerlesimBean implements Serializable{
 
 	@ManagedProperty(value = "#{yerlesimService}")
 	private YerlesimService yerlesimService;
-	private List<Yerlesim> liste;
+	
+	
+	LazyDataModel<Yerlesim> lazy;
 	private Yerlesim yerlesim;
-
 
 	@PostConstruct
 	private void init() {
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		setListe(yerlesimService.getAll());
+		listele();
 	}
 
 	public void kaydet() {
 		try {
-			yerlesimService.save(yerlesim);
-			liste=yerlesimService.getAll();
+			if(yerlesim.getId() ==null  || yerlesim.getId()<1L)
+				yerlesimService.save(yerlesim);
+			else
+				yerlesimService.update(yerlesim);
+			
+			listele();
 			yerlesim=new Yerlesim();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Kayıt Başarlı", "Kişi Kaydedildi!") );
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Güncelleme Başarlı", "Güncelleme Kaydedildi!") );
 		} catch (TDbException e) {			
 			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Hata",  e.getMessage()) );
 			e.printStackTrace();
@@ -53,22 +62,9 @@ public class YerlesimBean implements Serializable{
 		Yerlesim silinecek =yerlesimService.getById(id);
 		yerlesimService.delete(silinecek);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Silme", "Kişi Silindi") );
-		liste=yerlesimService.getAll();
+		listele();
 	}
 	
-	
-	
-	
-	
-	
-	public List<Yerlesim> getListe() {
-		return liste;
-	}
-
-
-	public void setListe(List<Yerlesim> liste) {
-		this.liste = liste;
-	}
 
 
 	public Yerlesim getYerlesim() {
@@ -85,6 +81,46 @@ public class YerlesimBean implements Serializable{
 	
 	public void setYerlesimService(YerlesimService yerlesimService) {
 		this.yerlesimService = yerlesimService;
+	}
+	
+	
+
+	
+	public void onRowSelect(SelectEvent event) {
+		this.yerlesim= (Yerlesim) event.getObject();        
+	}
+	
+	
+	private void listele() {
+		lazy = new LazyDataModel<Yerlesim>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1777988557181936414L;
+			
+			
+			@SuppressWarnings("unchecked")
+			@Override
+			public List<Yerlesim> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+				
+				PageModel mdl = yerlesimService.getByPaging(first, pageSize,filters);
+				
+				 lazy.setRowCount(mdl.getRowCount());
+				
+				return (List<Yerlesim>) mdl.getList();
+			}
+			
+			@Override
+			public Yerlesim getRowData(String rowKey) {				
+				return yerlesimService.getById(Long.parseLong(rowKey));
+			}
+			
+		};
+	}
+	
+	public LazyDataModel<Yerlesim> getLazy() {
+		return lazy;
 	}
 	
 	

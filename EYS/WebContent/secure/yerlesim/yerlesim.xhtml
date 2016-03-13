@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="pageContent">
+		<h:form id="frmYerlesim">
+			<p:growl id="growl" showDetail="true" life="10000" />
+
+			<p:dataTable id="tblYerlesim" selectionMode="single" reflow="true"
+				selection="#{yerlesimMB.yerlesim}" rowKey="#{yerlesim.id}" widgetVar="tblyerlesim"
+				var="yerlesim" value="#{yerlesimMB.lazy}" lazy="true" rows="10"
+				paginatorPosition="bottom" paginator="true" 
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+
+				<f:facet name="header">
+					Yerleşim Listesi
+				</f:facet>
+
+				<p:ajax event="rowSelect" listener="#{yerlesimMB.onRowSelect}" update=":frmYerlesim:dlgYerlesim" oncomplete="PF('dlgYerlesim').show()"/>
+				
+				<p:column headerText="ID">#{yerlesim.id}</p:column>
+
+				<p:column headerText="Tanım">#{yerlesim.tanim}</p:column>
+
+				<p:column headerText="Kod">#{yerlesim.kod}</p:column>
+				
+				<p:column headerText="İşlemler">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{yerlesimMB.sil(yerlesim.id)}"
+						update=":frmYerlesim:tblYerlesim,:frmYerlesim:growl">
+						<p:confirm header="Silme Onay!"
+							message="Silmek İstediginizden Emin misiniz?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Evet" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Hayır" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton value="Yeni" icon="ui-icon-plus" onclick="PF('dlgYerlesim').show()"></p:commandButton>
+				</f:facet>
+			</p:dataTable>
+			
+
+			<p:dialog id="dlgYerlesim" modal="true" widgetVar="dlgYerlesim">
+				<p:panelGrid columns="2">
+					<p:outputLabel>Kod :</p:outputLabel>
+					<p:inputText value="#{yerlesimMB.yerlesim.kod}"></p:inputText>
+
+					<p:outputLabel>Tanım :</p:outputLabel>
+					<p:inputText value="#{yerlesimMB.yerlesim.tanim}"></p:inputText>
+				
+					<p:commandButton value="İptal" onclick="PF('dlgYerlesim').hide()"></p:commandButton>
+					<p:commandButton value="Kaydet" actionListener="#{yerlesimMB.kaydet}"
+						update=":frmYerlesim:tblYerlesim,:frmYerlesim:growl,:frmYerlesim:dlgYerlesim"
+						oncomplete="PF('dlgYerlesim').hide()"></p:commandButton>
+
+				</p:panelGrid>
+			</p:dialog>
+			<br></br>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -55,8 +55,11 @@
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 					</p:confirmDialog>
 				</p:column>
+				<f:facet name="footer">
+					<p:commandButton value="Yeni" icon="ui-icon-plus" onclick="PF('dlgKisi').show()"></p:commandButton>
+				</f:facet>
 			</p:dataTable>
-			<p:commandButton value="Yeni" icon="ui-icon-plus" onclick="PF('dlgKisi').show()"></p:commandButton>
+			
 
 			<p:dialog id="dlgKisi" modal="true" widgetVar="dlgKisi">
 				<p:panelGrid columns="2">

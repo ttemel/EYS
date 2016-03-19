@@ -17,7 +17,7 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	    <param-value>/WEB-INF/ApplicationContext.xml</param-value>
 	</context-param>
 
-<context-param>
+	<context-param>
 		<param-name>log4jExposeWebAppRoot</param-name>
 		<param-value>false</param-value>
 	</context-param>
@@ -30,6 +30,7 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	<listener>
 	   <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
+	
    <listener> 
        <listener-class>
            org.springframework.web.context.ContextLoaderListener

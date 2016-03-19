@@ -11,7 +11,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
+import org.tutev.envanterys.entity.Kisi;
+import org.tutev.envanterys.entity.SKart;
 import org.tutev.envanterys.entity.Yerlesim;
 import org.tutev.envanterys.framework.PageModel;
 
@@ -19,12 +23,13 @@ import org.tutev.envanterys.framework.PageModel;
  * 
  * @author Ensari Malikanesi
  **/
-@ManagedBean(name = "yerlesimService")
-@ApplicationScoped
+@Service
 public class YerlesimService implements ServiceBase<Yerlesim> {
 
-	private static final long serialVersionUID = 3504721535678549981L;
 
+	@Autowired
+	private transient BaseService baseService;
+	
 	/**
 	 * 
 	 */
@@ -33,104 +38,48 @@ public class YerlesimService implements ServiceBase<Yerlesim> {
 	public Yerlesim save(Yerlesim entity) throws TDbException {
 
 		if (entity.getKod() != null && entity.getKod().equals("")) {
-			throw new TDbException("Yerleşim Kod Alanı Boş Olamaz!"); // To
-																		// change
-																		// body
-																		// of
-																		// generated
-																		// methods,
-																		// choose
-																		// Tools
-																		// |
-																		// Templates.
+			throw new TDbException("Yerleşim Kod Alanı Boş Olamaz!"); 
 		}
 		if (entity.getTanim() != null && entity.getTanim().equals("")) {
-			throw new TDbException("Yerleşim Tanım Alanı Boş Olamaz!"); // To
-																		// change
-																		// body
-																		// of
-																		// generated
-																		// methods,
-																		// choose
-																		// Tools
-																		// |
-																		// Templates.
+			throw new TDbException("Yerleşim Tanım Alanı Boş Olamaz!"); 
 		}
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.save(entity);
-		t.commit();
-		session.close();
-
-		return entity;
+		return (Yerlesim) baseService.save(entity);
 	}
 
 	@Override
 	public List<Yerlesim> getAll() {
-
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Yerlesim.class);
-		return (List<Yerlesim>) criteria.list();
-
+		return baseService.getAll(Kisi.class);
 	}
 
 	@Override
-	public Boolean update(Yerlesim entity) {
+	public Yerlesim update(Yerlesim entity) {
 		if (entity.getKod() != null && entity.getKod().equals("")) {
-			new TDbException("Yerleşim Kodu Boş Olamaz!"); // To change body of
-															// generated
-															// methods, choose
-															// Tools |
-															// Templates.
+			new TDbException("Yerleşim Kodu Boş Olamaz!"); 
 		}
-
 		if (entity.getTanim() != null && entity.getTanim().equals("")) {
 			new TDbException("Yerleşim tanımı Boş Olamaz!");
 		}
-
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.saveOrUpdate(entity);
-		t.commit();
-		session.close();
-
-		return true;
+		return (Yerlesim) baseService.update(entity);
 	}
 
 	@Override
 	public Boolean delete(Yerlesim entity) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.delete(entity);
-		t.commit();
-		session.close();
-
+    	baseService.delete(entity);
 		return true;
 	}
 
 	@Override
 	public Yerlesim getById(Long id) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Yerlesim.class);
+		Criteria criteria = baseService.getSession().createCriteria(Yerlesim.class);
 		criteria.add(Restrictions.eq("id", id)); // Restrictions ile listeye
 													// sadece id gelmesi
 													// sağlanıyor.
 		return (Yerlesim) criteria.uniqueResult();
 	}
 
-	public void deleteByKod(String kod) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Yerlesim.class);
-		criteria.add(Restrictions.eq("kod", kod)); // Restrictions ile listeye
-													// sadece id gelmesi
-													// sağlanıyor.
-		Yerlesim sz = (Yerlesim) criteria.uniqueResult();
-		delete(sz);
-	}
 	
 	public PageModel getByPaging(int first, int pageSize, Map<String, Object> filters) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Yerlesim.class);
+		Criteria criteria = baseService.getSession().createCriteria(Yerlesim.class);
 
 		// Filterları Hallet
 

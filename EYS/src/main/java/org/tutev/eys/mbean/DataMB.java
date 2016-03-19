@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.tutev.envanterys.entity.Sozluk;
 import org.tutev.envanterys.entity.enm.SozlukTip;
 import org.tutev.envanterys.service.SozlukService;
 
-@ManagedBean(name = "dataMB")
-@ApplicationScoped
+@Controller("dataMB")
+@Scope("singleton") //@ApplicationScope
 public class DataMB implements Serializable {
 
 	/**
@@ -24,8 +24,8 @@ public class DataMB implements Serializable {
 	private List<Sozluk> cinsiyetList;
 	private List<Sozluk> uyrukList;
 
-	@ManagedProperty(value="#{sozlukService}")
-	private SozlukService sozlukService;
+	@Autowired
+	private transient SozlukService sozlukService;
 
 	@PostConstruct
 	private void init() {

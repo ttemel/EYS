@@ -10,57 +10,47 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Dosya;
+import org.tutev.envanterys.entity.Kisi;
 
 
 /**
  *
  * @author mg-Win
  */
+@Service
 public class DosyaService implements ServiceBase<Dosya> {
 
+	@Autowired
+	private transient BaseService baseService;
+	
     public Dosya save(Dosya entity) throws TDbException {
         if (entity.getDosya() != null && entity.getDosya().equals("")) {
             throw new TDbException("Dosya boş olmamalıdır.");
         }
 
-   
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
-        session.save(entity);
-        t.commit();
-        session.close();
-
-        return entity;
+        return (Dosya) baseService.save(entity);
     }
 
     @SuppressWarnings("unchecked")
 	public List<Dosya> getAll() {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Dosya.class);
-        return (List<Dosya>) criteria.list();
+    	return baseService.getAll(Kisi.class);
     }
 
-    public Boolean update(Dosya entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Dosya update(Dosya entity) {
+    	return (Dosya) baseService.update(entity);
     }
 
     public Boolean delete(Dosya entity) {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
-        session.delete(entity);
-        t.commit();
-        session.close();
-
-        return true;
+		baseService.delete(entity);
+		return true;
     }
 
     public Dosya getById(Long id) {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Dosya.class);
-        criteria.add(Restrictions.eq("id", id));
-        return (Dosya) criteria.uniqueResult();
+    	return (Dosya) baseService.getById(Dosya.class, id);
     }
 
     

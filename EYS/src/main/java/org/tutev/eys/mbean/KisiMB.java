@@ -6,21 +6,24 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Kisi;
 import org.tutev.envanterys.framework.PageModel;
 import org.tutev.envanterys.service.KisiService;
 
-@ManagedBean(name="kisiMB")
-@ViewScoped
+//@ManagedBean(name="kisiMB")
+//@ViewScoped
+
+@Controller("kisiMB")
+@Scope(value="request")
 public class KisiMB implements Serializable{
 
 	/**
@@ -28,8 +31,8 @@ public class KisiMB implements Serializable{
 	 */
 	private static final long serialVersionUID = 3421343394633338633L;
 	
-	@ManagedProperty(value = "#{kisiService}")
-	private KisiService kisiService;
+	@Autowired
+	private transient KisiService kisiService;
 
 	LazyDataModel<Kisi> lazy;
 	private Kisi kisi;
@@ -38,7 +41,7 @@ public class KisiMB implements Serializable{
 	private void init() {
 		listele();
 	}
-
+	
 	public void kaydet() {
 		try {
 			if(kisi.getId() ==null  || kisi.getId()<1L)
@@ -69,10 +72,7 @@ public class KisiMB implements Serializable{
 		this.kisi= (Kisi) event.getObject();    
 	}
 
-	public void setKisiService(KisiService kisiService) {
-		this.kisiService = kisiService;
-	}
-	
+
 	public Kisi getKisi() {
 		if (kisi == null) {
 			kisi = new Kisi();

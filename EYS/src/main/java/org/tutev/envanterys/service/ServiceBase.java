@@ -14,13 +14,13 @@ import org.tutev.envanterys.TDbException;
  *
  * @author Tütev
  */
-public interface ServiceBase<T> extends Serializable {
+public interface ServiceBase<T>  {
     
    public T save(T entity) throws TDbException;
    
    public List<T> getAll();
       
-   public Boolean update(T entity) throws TDbException;
+   public T update(T entity) throws TDbException;
       
    public Boolean delete(T entity);
    

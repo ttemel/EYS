@@ -8,16 +8,12 @@ package org.tutev.envanterys.service;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
-import org.tutev.envanterys.entity.Kisi;
 import org.tutev.envanterys.entity.Kullanici;
 import org.tutev.envanterys.framework.PageModel;
 
@@ -25,10 +21,18 @@ import org.tutev.envanterys.framework.PageModel;
  *
  * @author Tütev
  */
-@ManagedBean(name = "kullaniciService")
-@ApplicationScoped
+
+@Service
 public class KullaniciService implements ServiceBase<Kullanici> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5022736355148519432L;
+	
+	@Autowired
+	private transient BaseService baseService;
+	
     @Override
     public Kullanici save(Kullanici entity) throws TDbException {
     	if (entity.getUsername() != null && entity.getUsername().equals("")) {
@@ -43,24 +47,17 @@ public class KullaniciService implements ServiceBase<Kullanici> {
 		}
 
 
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.save(entity);
-		t.commit();
-		session.close();
+		return (Kullanici) baseService.save(entity);
 
-		return entity;    }
+		  }
 
     @Override
     public List<Kullanici> getAll() {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Kullanici.class);
-
-        return (List<Kullanici>) criteria.list();
+    	return baseService.getAll(Kullanici.class);
     }
 
     @Override
-    public Boolean update(Kullanici entity) throws TDbException {
+    public Kullanici update(Kullanici entity) throws TDbException {
     	if (entity.getUsername() != null && entity.getUsername().equals("")) {
 			throw new TDbException("Kullanıcı Adı boş olmamalıdır.");
 		}
@@ -70,37 +67,25 @@ public class KullaniciService implements ServiceBase<Kullanici> {
 		}
 		if (entity.getUsername()!= null && entity.getUsername().equals("")) {
 			throw new TDbException("Kullanıcı seçilmelidir.");
-		}	Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.update(entity);
-		t.commit();
-		session.close();
-		return true;   
+		}	
+		
+		return (Kullanici) baseService.update(entity);
     }
     @Override
     public Boolean delete(Kullanici entity) {
-    	Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.delete(entity);
-		t.commit();
-		session.close();
-
+    	baseService.delete(entity);
 		return true;
     }
 
     @Override
     public Kullanici getById(Long id) {
-    	Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kullanici.class);
-		criteria.add(Restrictions.eq("id", id));
-		return (Kullanici) criteria.uniqueResult();    
+    	return (Kullanici) baseService.getById(Kullanici.class, id); 
 		}
 
     public Kullanici getKullaniciByUsernameAndPassword(String username, String password) throws TDbException {
-        Criteria criteria = THibernateUtil.getSessionFactory().openSession().createCriteria(Kullanici.class);
+        Criteria criteria =baseService.getSession().createCriteria(Kullanici.class);
         criteria.add(Restrictions.eq("username", username));
         criteria.add(Restrictions.eq("pass", password));
-        //criteria.add(Restrictions.and(Restrictions.eq("username", username),Restrictions.eq("pass", password)));
         Kullanici kullanici = (Kullanici) criteria.uniqueResult();
         if (kullanici == null) {
             throw new TDbException("Kullanici Bulunamadı");
@@ -110,8 +95,7 @@ public class KullaniciService implements ServiceBase<Kullanici> {
     }
     
     public PageModel getByPaging(int first, int pageSize, Map<String, Object> filters) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kullanici.class);
+		Criteria criteria =baseService.getSession().createCriteria(Kullanici.class);
 
 		// Filterları Hallet
 

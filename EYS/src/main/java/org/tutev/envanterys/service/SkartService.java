@@ -6,19 +6,23 @@
 package org.tutev.envanterys.service;
 
 import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
-import org.tutev.envanterys.entity.SKart;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
+import org.tutev.envanterys.entity.Kisi;
+import org.tutev.envanterys.entity.SKart;
 
 /**
  *
  * @author Tütev
  */
+@Service
 public class SkartService implements ServiceBase<SKart> {
 
+	@Autowired
+	private transient BaseService baseService;
+	
     @Override
     public SKart save(SKart entity) throws TDbException {
         if (entity.getKod() != null && entity.getKod().equals("")) {
@@ -29,25 +33,16 @@ public class SkartService implements ServiceBase<SKart> {
             throw new TDbException("Tanim Boş olmamalıdır.");
         }
 
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
-        session.save(entity);
-        t.commit();
-        session.close();
-
-        return entity;
+        return (SKart) baseService.save(entity);
     }
 
     @Override
     public List<SKart> getAll() {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(SKart.class);
-        criteria.add(Restrictions.ne("tanim", ""));
-        return (List<SKart>) criteria.list();
+    	return baseService.getAll(Kisi.class);
     }
 
     @Override
-    public Boolean update(SKart entity) {
+    public SKart update(SKart entity) {
         if (entity.getKod() != null && entity.getKod().equals("")) {
             new TDbException("Kod Boş olmamalıdır.");
         }
@@ -56,33 +51,18 @@ public class SkartService implements ServiceBase<SKart> {
             new TDbException("Tanim Boş olmamalıdır.");
         }
 
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
-        session.saveOrUpdate(entity);
-        t.commit();
-        session.close();
-
-        return true;
+        return (SKart) baseService.update(entity);
     }
 
     @Override
     public Boolean delete(SKart entity) {
-
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
-        session.delete(entity);
-        t.commit();
-        session.close();
-
-        return true;
+    	baseService.delete(entity);
+		return true;
     }
 
     @Override
     public SKart getById(Long id) {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(SKart.class);
-        criteria.add(Restrictions.eq("id", id));
-        return (SKart) criteria.uniqueResult();
+    	return (SKart) baseService.getById(SKart.class, id);
     }
 
 }

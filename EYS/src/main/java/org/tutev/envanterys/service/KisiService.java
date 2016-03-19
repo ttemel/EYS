@@ -3,27 +3,21 @@ package org.tutev.envanterys.service;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Kisi;
 import org.tutev.envanterys.framework.PageModel;
 
-@ManagedBean(name = "kisiService")
-@ApplicationScoped
-public class KisiService implements ServiceBase<Kisi> {
+@Service("kisiService")
+public class KisiService {
+	
+	@Autowired
+	private transient BaseService baseService;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8290449904487069620L;
 
 	public Kisi save(Kisi entity) throws TDbException {
 		if (entity.getAd() != null && entity.getAd().equals("")) {
@@ -47,23 +41,14 @@ public class KisiService implements ServiceBase<Kisi> {
 			throw new TDbException("Kisi 'e-Mail' boş olmamalıdır.");
 		}
 
-
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.save(entity);
-		t.commit();
-		session.close();
-
-		return entity;
+		return (Kisi) baseService.save(entity);
 	}
 
 	public List<Kisi> getAll() {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kisi.class);
-		return (List<Kisi>) criteria.list();
+		return baseService.getAll(Kisi.class);
 	}
 
-	public Boolean update(Kisi entity)  throws TDbException  {
+	public Kisi update(Kisi entity)  throws TDbException  {
 		if (entity.getAd() != null && entity.getAd().equals("")) {
 			throw new TDbException("Kisi 'Adı' boş olmamalıdır.");
 		}
@@ -85,56 +70,21 @@ public class KisiService implements ServiceBase<Kisi> {
 			throw new TDbException("Kisi 'e-Mail' boş olmamalıdır.");
 		}
 
-
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.update(entity);
-		t.commit();
-		session.close();
-		return true;
+		return (Kisi) baseService.update(entity);
 	}
 
 	public Boolean delete(Kisi entity) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		session.delete(entity);
-		t.commit();
-		session.close();
-
+		baseService.delete(entity);
 		return true;
 	}
 
 	public Kisi getById(Long id) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kisi.class);
-		criteria.add(Restrictions.eq("id", id));
-		return (Kisi) criteria.uniqueResult();
+		return (Kisi) baseService.getById(Kisi.class, id);
 	}
 
-	public Kisi getByAd(String ad) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kisi.class);
-		criteria.add(Restrictions.eq("ad", ad));
-		return (Kisi) criteria.uniqueResult();
-	}
-
-	public Kisi getBySoyad(String soyad) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kisi.class);
-		criteria.add(Restrictions.eq("soyad", soyad));
-		return (Kisi) criteria.uniqueResult();
-	}
-
-	public Kisi getByTcKimlikNo(Long tcKimlikNo) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kisi.class);
-		criteria.add(Restrictions.ilike("tcKimlikNo", tcKimlikNo));
-		return (Kisi) criteria.uniqueResult();
-	}
-
+	@Transactional
 	public PageModel getByPaging(int first, int pageSize, Map<String, Object> filters) {
-		Session session = THibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Kisi.class);
+		Criteria criteria  = baseService.getSession().createCriteria(Kisi.class);
 
 		// Filterları Hallet
 

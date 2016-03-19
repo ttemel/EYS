@@ -6,17 +6,25 @@
 package org.tutev.envanterys.service;
 
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Demirbas;
+import org.tutev.envanterys.entity.Kisi;
 
 /**
  *
  * @author Tütev
  */
+@Service
 public class DemirbasService implements ServiceBase<Demirbas> {
 
+	@Autowired
+	private transient BaseService baseService;
+	
     @Override
     public Demirbas save(Demirbas entity) throws TDbException{
         if (entity.getKod() != null && entity.getKod().equals("")) {
@@ -27,13 +35,7 @@ public class DemirbasService implements ServiceBase<Demirbas> {
             throw new TDbException("Tanim Boş olmamalıdır.");
         }
 
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
-        session.save(entity);
-        t.commit();
-        session.close();
-
-        return entity;
+        return (Demirbas) baseService.save(entity);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class DemirbasService implements ServiceBase<Demirbas> {
     }
 
     @Override
-    public Boolean update(Demirbas entity) {
+    public Demirbas update(Demirbas entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

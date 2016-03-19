@@ -6,11 +6,15 @@
 package org.tutev.envanterys.service;
 
 import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
+import org.tutev.envanterys.entity.Kisi;
 import org.tutev.envanterys.entity.KullaniciRol;
 import org.tutev.envanterys.entity.Rol;
 
@@ -18,8 +22,11 @@ import org.tutev.envanterys.entity.Rol;
  *
  * @author Hoca
  */
+@Service
 public class KullaniciRolService implements ServiceBase<KullaniciRol> {
-
+	@Autowired
+	private transient BaseService baseService;
+	
     @Override
     public KullaniciRol save(KullaniciRol entity) throws TDbException {
         if (entity.getKullanici() == null) {
@@ -30,13 +37,7 @@ public class KullaniciRolService implements ServiceBase<KullaniciRol> {
             throw new TDbException("Rol Boş olmamalıdır.");
         }
 
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Transaction t = session.beginTransaction();
-        session.save(entity);
-        t.commit();
-        session.close();
-
-        return entity;
+        return (KullaniciRol) baseService.save(entity);
     }
 
     public KullaniciRol save(KullaniciRol entity, List<Rol> list) throws TDbException {
@@ -50,22 +51,18 @@ public class KullaniciRolService implements ServiceBase<KullaniciRol> {
      */
     public List<KullaniciRol> getAllByUserId(Long userId) {
 
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(KullaniciRol.class);
+        Criteria criteria = baseService.getSession().createCriteria(KullaniciRol.class);
         criteria.add(Restrictions.eq("kullanici.id", userId));
         return (List<KullaniciRol>) criteria.list();
     }
 
     @Override
     public List<KullaniciRol> getAll() {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(KullaniciRol.class);
-
-        return (List<KullaniciRol>) criteria.list();
+    	return baseService.getAll(KullaniciRol.class);
     }
 
     @Override
-    public Boolean update(KullaniciRol entity) {
+    public KullaniciRol update(KullaniciRol entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -80,8 +77,7 @@ public class KullaniciRolService implements ServiceBase<KullaniciRol> {
     }
 
     public List<Rol> getAllRol() {
-        Session session = THibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Rol.class);
+        Criteria criteria = baseService.getSession().createCriteria(Rol.class);
         return (List<Rol>) criteria.list();
     }
 

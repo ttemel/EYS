@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,8 +88,26 @@ public class KisiService {
 	public PageModel getByPaging(int first, int pageSize, Map<String, Object> filters) {
 		Criteria criteria  = baseService.getSession().createCriteria(Kisi.class);
 
-		// Filterları Hallet
+		if(filters.get("ad")!=null){
+			criteria.add(Restrictions.ilike("ad", filters.get("ad").toString(),MatchMode.ANYWHERE));
+		}
+		
+		if(filters.get("soyad")!=null){
+			criteria.add(Restrictions.ilike("soyad", filters.get("soyad").toString(),MatchMode.ANYWHERE));
+		}
+		
+		if(filters.get("tcKimlikNo")!=null){
+			criteria.add(Restrictions.ilike("tcKimlikNo", filters.get("tcKimlikNo").toString(),MatchMode.ANYWHERE));
+		}
+		
+		if(filters.get("id")!=null){
+			criteria.add(Restrictions.eq("id", Long.parseLong(filters.get("id").toString())));
+		}
 
+		if(filters.get("uyruk")!=null){
+			criteria.add(Restrictions.eq("uyruk.id", Long.parseLong(filters.get("uyruk").toString())));
+		}
+		
 		PageModel model = new PageModel();
 		criteria.setProjection(Projections.rowCount());
 		model.setRowCount(Integer.parseInt("" + criteria.uniqueResult()));

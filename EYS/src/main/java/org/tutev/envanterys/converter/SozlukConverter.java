@@ -1,21 +1,23 @@
 package org.tutev.envanterys.converter;
 
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.tutev.envanterys.entity.Sozluk;
 import org.tutev.envanterys.service.SozlukService;
 
-@FacesConverter(value="sozlukConverter",forClass=Sozluk.class)
-@RequestScoped
+//@FacesConverter(value="sozlukConverter",forClass=Sozluk.class)
+
+@Controller("sozlukConverter")
+@Scope("request")
 public class SozlukConverter implements Converter {
 
-	@ManagedProperty(value = "#{sozlukService}")
-	private SozlukService sozlukService;
+	@Autowired
+	private transient SozlukService sozlukService;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,String value) {
@@ -37,8 +39,4 @@ public class SozlukConverter implements Converter {
 		return str;
 	}
 	
-	public void setSozlukService(SozlukService sozlukService) {
-		this.sozlukService = sozlukService;
-	}
-
 }

@@ -22,7 +22,7 @@ import org.tutev.envanterys.service.KisiService;
 //@ManagedBean(name="kisiMB")
 //@ViewScoped
 
-@Controller("kisiMB")
+@Controller("kisiController")
 @Scope(value="request")
 public class KisiMB implements Serializable{
 
@@ -94,6 +94,7 @@ public class KisiMB implements Serializable{
 			 */
 			private static final long serialVersionUID = 1777988557181936414L;
 			
+			 // Filtre Temizleme oncomplete="PF('tblKisi').clearFilters()" 
 			
 			@SuppressWarnings("unchecked")
 			@Override

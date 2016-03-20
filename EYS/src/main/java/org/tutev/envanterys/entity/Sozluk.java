@@ -78,6 +78,7 @@ public class Sozluk extends BaseEntity {
 	public void setSozluktip(SozlukTip sozluktip) {
 		this.sozluktip = sozluktip;
 	}
+
 	
 	@Override
 	public boolean equals(Object arg0) {
@@ -88,5 +89,4 @@ public class Sozluk extends BaseEntity {
 		}
 		return false;
 	}
-
 }

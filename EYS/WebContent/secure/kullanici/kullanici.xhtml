@@ -14,8 +14,8 @@
 			<p:growl id="growl" showDetail="true" life="10000" />
 
 			<p:dataTable id="tblKullanici" selectionMode="single" reflow="true"
-				selection="#{kullaniciMB.kullanici}" rowKey="#{kullanici.id}" widgetVar="tblKullanici"
-				var="kisi" value="#{kullaniciMB.lazy}" lazy="true" rows="10"
+				selection="#{kullaniciController.kullanici}" rowKey="#{kullanici.id}" widgetVar="tblKullanici"
+				var="kullanici" value="#{kullaniciController.lazy}" lazy="true" rows="10"
 				paginatorPosition="bottom" paginator="true" 
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15">
@@ -24,18 +24,20 @@
 					Kullanici Listesi
 				</f:facet>
 
-				<p:ajax event="rowSelect" listener="#{kullaniciMB.onRowSelect}" update=":frmKullanici:dlgKullanici" oncomplete="PF('dlgKullanici').show()"/>
+				<p:ajax event="rowSelect" listener="#{kullaniciController.onRowSelect}" update=":frmKullanici:dlgKullanici" oncomplete="PF('dlgKullanici').show()"/>
 				
 				<p:column headerText="ID">#{kullanici.id}</p:column>
 
-				<p:column headerText="Ad">#{kullanici.username}</p:column>
+				<p:column headerText="USERNAME">#{kullanici.username}</p:column>
 
-				<p:column headerText="Soyad">#{kullanici.pass}</p:column>
+				<p:column headerText="Şifre ">#{kullanici.pass}</p:column>
+				
+				<p:column headerText="Şifre ">#{kullanici.kisi.adSoyad}</p:column>
 		
 
 				<p:column headerText="İşlemler">
 					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{kullaniciMB.sil(kullanici.id)}"
+						actionListener="#{kullaniciController.sil(kullanici.id)}"
 						update=":frmKullanici:tblKullanici,:frmKullanici:growl">
 						<p:confirm header="Silme Onay"
 							message="Silmek İstediginizden Emin misiniz?"
@@ -53,18 +55,21 @@
 
 			<p:dialog id="dlgKullanici" modal="true" widgetVar="dlgKullanici">
 				<p:panelGrid columns="2">
-					<p:outputLabel>Kişi :</p:outputLabel>
-					<p:inputText value="#{kullaniciMB.kullanici.kisi}"></p:inputText>
+					
 
 					<p:outputLabel>Kullanıcı Adı :</p:outputLabel>
-					<p:inputText value="#{kullaniciMB.kullanici.username}"></p:inputText>
+					<p:inputText value="#{kullaniciController.kullanici.username}"></p:inputText>
 
-					<p:outputLabel>TC :</p:outputLabel>
-					<p:inputText value="#{kullaniciMB.kullanici.pass}"></p:inputText>
+					<p:outputLabel>Şifre :</p:outputLabel>
+					<p:inputText value="#{kullaniciController.kullanici.pass}"></p:inputText>
 
+					<p:outputLabel>Kişi :</p:outputLabel>
+					<p:autoComplete converter="#{kisiConverter}" value="#{kullaniciController.kullanici.kisi}" completeMethod="#{kullaniciController.getKisi}"
+					itemLabel="#{kisi.adSoyad}"  itemValue="#{kisi.id}" minQueryLength="3" var="kisi" forceSelection="true" >
+					</p:autoComplete>
 
 					<p:commandButton value="İptal" onclick="PF('dlgKullanici').hide()"></p:commandButton>
-					<p:commandButton value="Kaydet" actionListener="#{kullaniciMB.kaydet}"
+					<p:commandButton value="Kaydet" actionListener="#{kullaniciController.kaydet}"
 						update=":frmKullanici:tblKullanici,:frmKullanici:growl,:frmKullanici:dlgKullanici"
 						oncomplete="PF('dlgKullanici').hide()"></p:commandButton>
 

@@ -14,13 +14,18 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.tutev.envanterys.TDbException;
+import org.tutev.envanterys.entity.Kisi;
 import org.tutev.envanterys.entity.Kullanici;
 import org.tutev.envanterys.framework.PageModel;
+import org.tutev.envanterys.service.KisiService;
 import org.tutev.envanterys.service.KullaniciService;
 
-@ManagedBean(name="kullaniciMB")
-@ViewScoped
+@Controller("kullaniciController")
+@Scope(value="request")
 public class KullaniciMB implements Serializable {
 
 	/**
@@ -28,21 +33,13 @@ public class KullaniciMB implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@ManagedProperty(value = "#{kullaniciService}")
-	private KullaniciService kullaniciService;
+	@Autowired
+	private transient KullaniciService kullaniciService;
 	
-	public KullaniciService getKullaniciService() {
-		return kullaniciService;
-	}
+	@Autowired
+	private transient KisiService  kisiService;
 
-	public void setLazy(LazyDataModel<Kullanici> lazy) {
-		this.lazy = lazy;
-	}
-
-	public void setKullanici(Kullanici kullanici) {
-		this.kullanici = kullanici;
-	}
-
+	
 
 
 	LazyDataModel<Kullanici> lazy;
@@ -84,18 +81,7 @@ public class KullaniciMB implements Serializable {
 		this.kullaniciService = kullaniciService;
 	}
 	
-	public Kullanici getKullanici() {
-		if(kullanici==null){
-			kullanici=new Kullanici();
-		}
-		return kullanici;
-	}
 	
-	public void setKullanic(Kullanici kullanici) {
-		this.kullanici = kullanici;
-	}
-
-
 	private void listele() {
 		lazy = new LazyDataModel<Kullanici>() {
 
@@ -121,12 +107,33 @@ public class KullaniciMB implements Serializable {
 				return kullaniciService.getById(Long.parseLong(rowKey));
 			}
 			
+			
+			@Override
+			public Object getRowKey(Kullanici object) {
+				return object.getId();
+			}
+			
 		};
 	}
 	
+	public List<Kisi> getKisi(String query) {
+		return kisiService.getByNameOrSurname(query);
+	}
 	
 	
 	public LazyDataModel<Kullanici> getLazy() {
 		return lazy;
+	}
+	
+	public Kullanici getKullanici() {
+		if(kullanici==null){
+			kullanici=new Kullanici();
+			kullanici.setKisi(new Kisi());
+		}
+		return kullanici;
+	}
+	
+	public void setKullanici(Kullanici kullanici) {
+		this.kullanici = kullanici;
 	}
 }

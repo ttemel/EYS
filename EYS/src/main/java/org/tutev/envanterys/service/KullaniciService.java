@@ -13,6 +13,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Kullanici;
 import org.tutev.envanterys.framework.PageModel;
@@ -23,7 +24,7 @@ import org.tutev.envanterys.framework.PageModel;
  */
 
 @Service
-public class KullaniciService implements ServiceBase<Kullanici> {
+public class KullaniciService  {
 
 	/**
 	 * 
@@ -33,7 +34,6 @@ public class KullaniciService implements ServiceBase<Kullanici> {
 	@Autowired
 	private transient BaseService baseService;
 	
-    @Override
     public Kullanici save(Kullanici entity) throws TDbException {
     	if (entity.getUsername() != null && entity.getUsername().equals("")) {
 			throw new TDbException("Kullanıcı Adı boş olmamalıdır.");
@@ -51,12 +51,10 @@ public class KullaniciService implements ServiceBase<Kullanici> {
 
 		  }
 
-    @Override
     public List<Kullanici> getAll() {
     	return baseService.getAll(Kullanici.class);
     }
 
-    @Override
     public Kullanici update(Kullanici entity) throws TDbException {
     	if (entity.getUsername() != null && entity.getUsername().equals("")) {
 			throw new TDbException("Kullanıcı Adı boş olmamalıdır.");
@@ -71,13 +69,11 @@ public class KullaniciService implements ServiceBase<Kullanici> {
 		
 		return (Kullanici) baseService.update(entity);
     }
-    @Override
     public Boolean delete(Kullanici entity) {
     	baseService.delete(entity);
 		return true;
     }
 
-    @Override
     public Kullanici getById(Long id) {
     	return (Kullanici) baseService.getById(Kullanici.class, id); 
 		}
@@ -94,6 +90,7 @@ public class KullaniciService implements ServiceBase<Kullanici> {
         return kullanici;
     }
     
+    @Transactional
     public PageModel getByPaging(int first, int pageSize, Map<String, Object> filters) {
 		Criteria criteria =baseService.getSession().createCriteria(Kullanici.class);
 

@@ -118,4 +118,16 @@ public class KisiService {
 		model.setList(criteria.list());
 		return model;
 	}
+
+	@Transactional
+	public List<Kisi> getByNameOrSurname(String query) {
+		
+		Criteria criteria  = baseService.getSession().createCriteria(Kisi.class);
+		
+		criteria.add(Restrictions.or(
+				Restrictions.ilike("ad",query,MatchMode.ANYWHERE),
+				Restrictions.ilike("soyad",query,MatchMode.ANYWHERE)));
+		
+		return criteria.list();
+	}
 }

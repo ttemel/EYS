@@ -164,6 +164,14 @@ public class Kisi extends BaseEntity {
 	}
 	
 	
-	
+	@Override
+	public boolean equals(Object arg0) {
+		if(arg0 instanceof Kisi){
+			if(((Kisi)arg0).getId().equals(this.id)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

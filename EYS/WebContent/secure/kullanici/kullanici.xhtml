@@ -65,7 +65,7 @@
 
 					<p:outputLabel>Kişi :</p:outputLabel>
 					<p:autoComplete converter="#{kisiConverter}" value="#{kullaniciController.kullanici.kisi}" completeMethod="#{kullaniciController.getKisi}"
-					itemLabel="#{kisi.adSoyad}"  itemValue="#{kisi.id}" minQueryLength="3" var="kisi" forceSelection="true" >
+					itemLabel="#{kisi.adSoyad}"  itemValue="#{kisi}" minQueryLength="3" var="kisi" forceSelection="true" >
 					</p:autoComplete>
 
 					<p:commandButton value="İptal" onclick="PF('dlgKullanici').hide()"></p:commandButton>

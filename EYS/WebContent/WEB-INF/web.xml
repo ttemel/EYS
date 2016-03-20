@@ -6,6 +6,10 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 	<display-name>EYS</display-name>
 
+	<welcome-file-list>
+	    <welcome-file>home.xhtml</welcome-file>
+	</welcome-file-list>
+
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -53,9 +57,9 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	</context-param>
 	
 	<context-param>
-  <param-name>net.bootsfaces.blockUI</param-name>
-  <param-value>true</param-value>
-</context-param>
+	  <param-name>net.bootsfaces.blockUI</param-name>
+	  <param-value>true</param-value>
+	</context-param>
 
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -66,7 +70,6 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 		<session-timeout>30</session-timeout>
 	</session-config>
 
-	<!-- Map these files with JSF -->
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>

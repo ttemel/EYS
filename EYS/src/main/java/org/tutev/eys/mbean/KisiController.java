@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -24,12 +25,14 @@ import org.tutev.envanterys.service.KisiService;
 
 @Controller("kisiController")
 @Scope(value="request")
-public class KisiMB implements Serializable{
+public class KisiController implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3421343394633338633L;
+	
+	public static Logger logger=Logger.getLogger(KisiController.class);
 	
 	@Autowired
 	private transient KisiService kisiService;
@@ -43,17 +46,22 @@ public class KisiMB implements Serializable{
 	}
 	
 	public void kaydet() {
+		logger.info("Kişi Kaydı Oluşturuluyor - " + kisi.toString() );
+		
 		try {
 			if(kisi.getId() ==null  || kisi.getId()<1L)
 				kisiService.save(kisi);
-			else
+			else{
 				kisiService.update(kisi);
+				logger.info("Kişi Kaydı Güncellendi");
+			}
 			
 			listele();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Kayıt Başarılı", "Kişi Kaydedildi") );
 		} catch (TDbException e) {			
 			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Hata",  e.getMessage()) );
 			e.printStackTrace();
+			logger.error("Kişi Kaydedilirken Hata Alındı " + kisi.toString());
 		}
 	}
 	

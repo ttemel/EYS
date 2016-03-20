@@ -29,6 +29,15 @@ import javax.persistence.Transient;
 @Table(name = "Kisi")
 public class Kisi extends BaseEntity {
 
+	@Override
+	public String toString() {
+		return "Kisi [id=" + id + ", ad=" + ad + ", soyad=" + soyad
+				+ ", tcKimlikNo=" + tcKimlikNo + ", mail=" + mail
+				+ ", dogumTarihi=" + dogumTarihi + ", cinsiyet=" + cinsiyet
+				+ ", uyruk=" + uyruk + ", adSoyad=" + adSoyad + ", resim="
+				+ resim + "]";
+	}
+
 	/**
 	 * 
 	 */

@@ -55,6 +55,11 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+
+	<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+	    <property name="baseAddress" value="http://localhost:8090/WS/" />
+	</bean>
+	
 </beans>
 
 

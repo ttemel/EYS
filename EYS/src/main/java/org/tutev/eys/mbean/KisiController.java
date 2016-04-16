@@ -8,6 +8,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import net.webservicex.GetWeather;
+import net.webservicex.GlobalWeather;
+import net.webservicex.GlobalWeatherSoap;
+
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
@@ -74,6 +78,12 @@ public class KisiController implements Serializable{
 		kisiService.delete(silinecek);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Silme", "Kişi Silindi") );
 		listele();
+	}
+	
+	public void havaDurumGetir() {
+		GlobalWeatherSoap soap = new GlobalWeather().getGlobalWeatherSoap();
+		String mesaj = soap.getCitiesByCountry("Turkey");
+		System.out.println(mesaj);
 	}
 	
 	public void onRowSelect(SelectEvent event) {

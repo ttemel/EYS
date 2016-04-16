@@ -48,7 +48,7 @@ public class YerlesimService implements ServiceBase<Yerlesim> {
 
 	@Override
 	public List<Yerlesim> getAll() {
-		return baseService.getAll(Kisi.class);
+		return baseService.getAll(Yerlesim.class);
 	}
 
 	@Override

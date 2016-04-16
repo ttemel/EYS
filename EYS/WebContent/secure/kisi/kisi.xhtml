@@ -86,6 +86,7 @@
 				<f:facet name="footer">
 					<p:commandButton id="btnYeni" value="Yeni" actionListener="#{kisiController.yeni}" update=":frmKisi:dlgKisi" icon="ui-icon-plus" oncomplete="PF('dlgKisi').show()"></p:commandButton>
 					<p:commandButton value="Temizle" onclick="ClearMyFilter();" icon="ui-icon-trash" />
+					<p:commandButton value="WS Test" actionListener="#{kisiController.havaDurumGetir}" icon="ui-icon-disk" />
 				</f:facet>
 			</p:dataTable>
 			

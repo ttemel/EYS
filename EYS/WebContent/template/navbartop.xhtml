@@ -36,6 +36,9 @@
       <b:navbarLinks pull="right">
         <b:navLink  value="Aktif Kullanıcı" />
       </b:navbarLinks>
+      	<h:form id="frmLogOut" role="form" prependId="false" onsubmit="document.#{p:component('frmLogOut')}.action='/EYS/logOut';">
+		<h:commandButton value="Çıkış"  ajax="false"></h:commandButton>                      
+		</h:form>
     </b:container>
   </b:navBar>
 

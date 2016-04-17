@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:facet name="first">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+	</f:facet>
+	<f:facet name="middle">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="revisit-after" content="7 days" />
+		<meta name="DISTRIBUTION" content="GLOBAL" />
+		<meta http-equiv="PRAGMA" content="NO-CACHE" />
+
+		<h:outputStylesheet library="sh" name="css/shCore.css" />
+		<h:outputStylesheet library="sh" name="css/shCoreEclipse.css" />
+		<h:outputStylesheet name="last.css" position="last" />
+		<h:outputStylesheet name="first.css" position="first" />
+		<h:outputStylesheet name="middle.css" position="middle" />
+		<h:outputStylesheet library="customthemes"
+			name="#{theme.customTheme}/bootstrap.min.css"
+			rendered="#{theme.customTheme ne ''}" />
+		<h:outputStylesheet library="customthemes"
+			name="#{theme.customTheme}/#{theme.customTheme}.css"
+			rendered="#{theme.customTheme ne ''}" />
+		<style>
+.tooltip-inner {
+	max-width: 350px;
+	width: 350px;
+}
+</style>
+	</f:facet>
+</h:head>
+
+<h:body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="login-panel panel panel-default">
+					<div style="background-color: black;">
+						<div align="center" style="background-color: black;">
+							<p:graphicImage library="img" styleClass="imgLogo"
+								name="logo.png"></p:graphicImage>
+						</div>
+					</div>
+					<div class="panel-body">
+						<h:form id="loginForm" role="form" prependId="false"
+							onsubmit="document.#{p:component('loginForm')}.action='logIn';">
+							<fieldset>
+								<div class="form-group">
+									<h:inputText id="j_username" class="form-control"
+										a:placeholder="Kullanıcı Adı" name="email" type="email">
+									</h:inputText>
+									<p:watermark for="j_username" value="Kullanıcı Adı"
+										id="wUsername" />
+								</div>
+								<div class="form-group">
+									<h:inputSecret class="form-control" a:placeholder="Şifre"
+										name="password" type="password" id="j_password" value="">
+									</h:inputSecret>
+									<p:watermark for="j_password" value="Şifre" id="wPassword" />
+								</div>
+								<p:commandButton value="Giriş"
+									styleClass="btn btn-lg btn-success btn-block" ajax="false"></p:commandButton>
+                                 <h:outputLabel rendered="#{sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message !=null }"  value="Kullanıcı Adı Veya Şifre Yanlış"  styleClass="error"/> 
+ 								 
+							</fieldset>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+
+</html>

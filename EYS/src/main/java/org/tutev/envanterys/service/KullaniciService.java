@@ -12,6 +12,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tutev.envanterys.TDbException;
@@ -20,7 +21,7 @@ import org.tutev.envanterys.framework.PageModel;
 
 /**
  *
- * @author Tütev
+ * @author TÃ¼tev
  */
 
 @Service
@@ -32,17 +33,20 @@ public class KullaniciService  {
 	
     public Kullanici save(Kullanici entity) throws TDbException {
     	if (entity.getUsername() != null && entity.getUsername().equals("")) {
-			throw new TDbException("Kullanıcı Adı boş olmamalıdır.");
+			throw new TDbException("KullanÄ±cÄ± AdÄ± boÅŸ olmamalÄ±dÄ±r.");
 		}
 
 		if (entity.getPass() != null && entity.getPass().equals("")) {
-			throw new TDbException("Şifre boş olmamalıdır.");
+			throw new TDbException("Å�ifre boÅŸ olmamalÄ±dÄ±r.");
 		}
 		if (entity.getUsername()!= null && entity.getUsername().equals("")) {
-			throw new TDbException("Kullanıcı seçilmelidir.");
+			throw new TDbException("KullanÄ±cÄ± seÃ§ilmelidir.");
 		}
 
-
+		Md5PasswordEncoder encoder=new Md5PasswordEncoder();
+		String sifrelenmisSifre = encoder.encodePassword(entity.getPass(), null);
+		entity.setPass(sifrelenmisSifre);
+		
 		return (Kullanici) baseService.save(entity);
 
 		  }
@@ -54,15 +58,19 @@ public class KullaniciService  {
 
     public Kullanici update(Kullanici entity) throws TDbException {
     	if (entity.getUsername() != null && entity.getUsername().equals("")) {
-			throw new TDbException("Kullanıcı Adı boş olmamalıdır.");
+			throw new TDbException("KullanÄ±cÄ± AdÄ± boÅŸ olmamalÄ±dÄ±r.");
 		}
 
 		if (entity.getPass() != null && entity.getPass().equals("")) {
-			throw new TDbException("Şifre boş olmamalıdır.");
+			throw new TDbException("Å�ifre boÅŸ olmamalÄ±dÄ±r.");
 		}
 		if (entity.getUsername()!= null && entity.getUsername().equals("")) {
-			throw new TDbException("Kullanıcı seçilmelidir.");
+			throw new TDbException("KullanÄ±cÄ± seÃ§ilmelidir.");
 		}	
+		
+		Md5PasswordEncoder encoder=new Md5PasswordEncoder();
+		String sifrelenmisSifre = encoder.encodePassword(entity.getPass(), null);
+		entity.setPass(sifrelenmisSifre);
 		
 		return (Kullanici) baseService.update(entity);
     }
@@ -75,13 +83,13 @@ public class KullaniciService  {
     	return (Kullanici) baseService.getById(Kullanici.class, id); 
 		}
 
-    public Kullanici getKullaniciByUsernameAndPassword(String username, String password) throws TDbException {
+    @Transactional
+    public Kullanici getKullaniciByUsernameAndPassword(String username) throws TDbException {
         Criteria criteria =baseService.getSession().createCriteria(Kullanici.class);
         criteria.add(Restrictions.eq("username", username));
-        criteria.add(Restrictions.eq("pass", password));
         Kullanici kullanici = (Kullanici) criteria.uniqueResult();
         if (kullanici == null) {
-            throw new TDbException("Kullanici Bulunamadı");
+            throw new TDbException("Kullanici BulunamadÄ±");
         }
 
         return kullanici;
@@ -91,7 +99,7 @@ public class KullaniciService  {
     public PageModel getByPaging(int first, int pageSize, Map<String, Object> filters) {
 		Criteria criteria =baseService.getSession().createCriteria(Kullanici.class);
 
-		// Filterları Hallet
+		// FilterlarÄ± Hallet
 
 		PageModel model = new PageModel();
 		criteria.setProjection(Projections.rowCount());

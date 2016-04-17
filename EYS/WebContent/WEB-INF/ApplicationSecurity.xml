@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    					http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/security 
+                        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<http use-expressions="true" >
+		<intercept-url pattern="/secure/**" access="isAuthenticated()" />
+
+		<form-login   login-processing-url="/logIn"
+			login-page="/Login.xhtml" default-target-url="/secure/index.xhtml?faces-redirect=true"
+			always-use-default-target="true" authentication-failure-url="/Login.xhtml?error=true" />
+			
+		<logout logout-success-url="/Login.xhtml" logout-url="/logOut" invalidate-session="true" />
+		<remember-me  />
+		<access-denied-handler  error-page="/accessDenied.xhtml" />
+
+		<session-management invalid-session-url="/Login.xhtml">
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+		</session-management>
+
+	</http>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="userServiceImpl">
+			<password-encoder hash="md5"></password-encoder>
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="userServiceImpl" class="org.tutev.envanterys.security.UserServiceImpl" />
+
+</beans:beans>

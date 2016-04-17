@@ -46,6 +46,7 @@ public class KisiService {
 		return (Kisi) baseService.save(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Kisi> getAll() {
 		return baseService.getAll(Kisi.class);
 	}
@@ -119,6 +120,7 @@ public class KisiService {
 		return model;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Kisi> getByNameOrSurname(String query) {
 		

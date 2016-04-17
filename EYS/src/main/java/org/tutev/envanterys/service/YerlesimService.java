@@ -3,19 +3,14 @@ package org.tutev.envanterys.service;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
-import org.tutev.envanterys.entity.Kisi;
-import org.tutev.envanterys.entity.SKart;
 import org.tutev.envanterys.entity.Yerlesim;
 import org.tutev.envanterys.framework.PageModel;
 
@@ -46,6 +41,7 @@ public class YerlesimService implements ServiceBase<Yerlesim> {
 		return (Yerlesim) baseService.save(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Yerlesim> getAll() {
 		return baseService.getAll(Yerlesim.class);

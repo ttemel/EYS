@@ -9,6 +9,7 @@ package org.tutev.envanterys;
  *
  * @author Tütev
  */
+@SuppressWarnings("serial")
 public class TDbException extends Exception {
 
     public TDbException(String msg) {

@@ -36,7 +36,8 @@ public class SkartService implements ServiceBase<SKart> {
         return (SKart) baseService.save(entity);
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<SKart> getAll() {
     	return baseService.getAll(Kisi.class);
     }

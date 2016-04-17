@@ -5,7 +5,6 @@
  */
 package org.tutev.envanterys.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.tutev.envanterys.TDbException;

@@ -12,6 +12,7 @@ public class YerlesimRS {
 
 	//http://localhost:8080/EYS/rest/Yerlesim
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	public List<Il> getAll() {

@@ -50,7 +50,6 @@ public class Kisi extends BaseEntity {
 	private Date dogumTarihi;
 	private Sozluk cinsiyet;
 	private Sozluk uyruk;
-	@SuppressWarnings("unused")
 	private String adSoyad;
 	private Dosya resim;
 

@@ -26,10 +26,6 @@ import org.tutev.envanterys.framework.PageModel;
 @Service
 public class KullaniciService  {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5022736355148519432L;
 	
 	@Autowired
 	private transient BaseService baseService;
@@ -51,7 +47,8 @@ public class KullaniciService  {
 
 		  }
 
-    public List<Kullanici> getAll() {
+    @SuppressWarnings("unchecked")
+	public List<Kullanici> getAll() {
     	return baseService.getAll(Kullanici.class);
     }
 

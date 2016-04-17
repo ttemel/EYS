@@ -7,13 +7,10 @@ package org.tutev.envanterys.service;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
 import org.tutev.envanterys.entity.Demirbas;
-import org.tutev.envanterys.entity.Kisi;
 
 /**
  *

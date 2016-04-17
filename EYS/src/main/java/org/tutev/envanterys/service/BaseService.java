@@ -34,6 +34,7 @@ public class BaseService {
 		getSession().delete(o);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Transactional
 	public Object getById(Class cls, Long id) {
 		Criteria criteria = getSession().createCriteria(cls);
@@ -41,6 +42,7 @@ public class BaseService {
 		return criteria.uniqueResult();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Transactional
 	public List getAll(Class cls) {
 		Criteria criteria = getSession().createCriteria(cls);

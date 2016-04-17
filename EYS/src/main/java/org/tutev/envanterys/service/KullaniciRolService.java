@@ -8,13 +8,10 @@ package org.tutev.envanterys.service;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tutev.envanterys.TDbException;
-import org.tutev.envanterys.entity.Kisi;
 import org.tutev.envanterys.entity.KullaniciRol;
 import org.tutev.envanterys.entity.Rol;
 
@@ -49,14 +46,16 @@ public class KullaniciRolService implements ServiceBase<KullaniciRol> {
      * @param userId Aktif Kullanıcının Id Bilgisi
      * @return İlgili Kullanıcıya Ait Roller
      */
-    public List<KullaniciRol> getAllByUserId(Long userId) {
+    @SuppressWarnings("unchecked")
+	public List<KullaniciRol> getAllByUserId(Long userId) {
 
         Criteria criteria = baseService.getSession().createCriteria(KullaniciRol.class);
         criteria.add(Restrictions.eq("kullanici.id", userId));
         return (List<KullaniciRol>) criteria.list();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<KullaniciRol> getAll() {
     	return baseService.getAll(KullaniciRol.class);
     }
@@ -76,7 +75,8 @@ public class KullaniciRolService implements ServiceBase<KullaniciRol> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<Rol> getAllRol() {
+    @SuppressWarnings("unchecked")
+	public List<Rol> getAllRol() {
         Criteria criteria = baseService.getSession().createCriteria(Rol.class);
         return (List<Rol>) criteria.list();
     }
